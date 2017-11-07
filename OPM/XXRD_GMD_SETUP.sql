@@ -1,6 +1,15 @@
+/*Responsibility: Product Development Security Manager
+This Document has queries to extract setup related information for Oracle ERP Module OPM  GMD Process Manufacturing product development.
+Queries are 
+* Product Development setup parameters 
+* OPM Formula Security Control
+* OPM Formula Security Profiles
+* Automatic Recipe Generation Rules
+* Process Quality Parameters
+* OPM Status Setups 
+*/
 
-/*Responsibility: Product Development Security Manager*/
-/* Formatted on 1/12/2015 2:13:20 PM (QP5 v5.256.13226.35510) */
+/*Query: Product Development setup parameters  */
 SELECT
        Inv_detail_util_pvt.Get_organization_code (Gph.Organization_id) Org
       ,INV_meaning_sel.c_fnd_lookup_vl (gph.Lab_ind, 'GMI_YES_NO') Lab
@@ -136,11 +145,9 @@ ORDER BY
        
        
 --   GMD_PARAMETERS_DTL_PKG.GET_PARAMETER_LIST
-
 --gmd_api_grp.FETCH_PARM_VALUES
 
-/* Formatted on 2014/08/19 10:44 (Formatter Plus v4.8.8) rama.koganti*/
-/*Formula Security Control*/
+/*Query: OPM Formula Security Control*/
 Select Ood.Organization_code
      , Gsc.Object_type
      , Gsc.User_ind
@@ -156,7 +163,7 @@ Where  1 = 1
 And    Gsc.Organization_id = Ood.Organization_id;
 
 
-/* Formatted on 1/13/2015 4:12:53 PM (QP5 v5.256.13226.35510) */
+/*Query: OPM Formula Security Profiles*/
 SELECT
        INV_detail_util_pvt.get_organization_code (GSP.ORGANIZATION_ID) org
       ,INV_detail_util_pvt.get_organization_code (GSP.OTHER_ORGANIZATION_ID) other_org
@@ -181,9 +188,7 @@ FROM
 WHERE
        1 = 1;
 
-
-/*Recipe Generation Rules*/
-/* Formatted on 1/12/2015 2:27:46 PM (QP5 v5.256.13226.35510) */
+/*Query: Automatic Recipe Generation Rules*/
 SELECT
        GRG.ORGANIZATION_ID
       /*Recipe use*/
@@ -210,14 +215,12 @@ WHERE
        1 = 1;
 
 
-GMD_TECH_PARAMETERS_VL
+--GMD_TECH_PARAMETERS_VL
 
-GMD_RECIPE_PROCESS_PARAMETERS
+--GMD_RECIPE_PROCESS_PARAMETERS
 
-GMD_OPRN_PROCESS_PARAMETERS
-/* Formatted on 1/15/2015 1:19:11 PM (QP5 v5.256.13226.35510) */
-/*Process Quality Parameters*/
-
+---GMD_OPRN_PROCESS_PARAMETERS
+/*Query: Process Quality Parameters*/
 SELECT
        Mtp.Organization_code Org
       ,Gqc.Quality_lab_ind
@@ -277,7 +280,8 @@ AND    OOD.ORGANIZATION_ID = gqc.ORGANIZATION_ID
 AND    Mtp.Organization_id = Gqc.Organization_id;
 
 
-/*GMD Status Setup*/
+
+/*Query: OPM Status Setups */
 SELECT 
   gsn.CURRENT_STATUS ||'- '||gsc.meaning Current_Status,
   gsn.TARGET_STATUS  ||'- '||gst.meaning TARGET_STATUS,
